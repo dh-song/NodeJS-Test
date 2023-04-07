@@ -9,7 +9,8 @@ export default {
     },
     mounted() {
         console.log("mounted");
-        fetch(`http://localhost:8080/menus/${this.$route.query.id}`)
+        // fetch(`http://localhost:8080/menus/${this.$route.query.id}`)
+        fetch(`http://localhost:8080/menus/${this.$route.params.id}`)
             .then(response => response.json())
             .then(result => this.menu = result)
             .catch(error => console.log('error', error));

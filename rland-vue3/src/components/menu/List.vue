@@ -1,17 +1,25 @@
 <script>
+import NewMenuList from './NewMenuList.vue';
+
  export default{
-    data(){
+    data() {
         return {
-            list: [{},{},{},{}]
+            list: [{}, {}, {}, {}],
+            newMenuList: []
+            
         };
     },
-    mounted(){
+    mounted() {
         fetch("http://localhost:8080/menus")
-        .then(reponse => reponse.json())
-        .then(list=> this.list=list);
-    }
-
- }
+            .then(reponse => reponse.json())
+            // .then(list => this.list = list);
+            .then(data => {
+               this.list = data.list;
+               this.NewMenuList = data.NewMenuList;
+            })
+    },
+    components: { NewMenuList }
+}
 
 
 
@@ -84,7 +92,8 @@
                       <form class="">
                           <h1 v-text="menu.name"></h1> 
                           <div class="menu-img-box">
-                            <router-link :to="'detail?id='+ menu.id"><img class="menu-img" :src="'/image/product/'+menu.img"></router-link>
+                            <!-- <router-link :to="'detail?id='+ menu.id"><img class="menu-img" :src="'/image/product/'+menu.img"></router-link> -->
+                            <router-link :to="'id='+ menu.id"><img class="menu-img" :src="'/image/product/'+menu.img"></router-link>
                           </div>    
                           <div class="menu-price" ><span v-text="menu.price + '원'"></span></div>
                           <div class="menu-option-list">
@@ -110,16 +119,7 @@
             <a href="" class="btn btn-round w-100 w-50-md py-2">더보기(13+)</a>
          </div>
 
-         <section class="new-menu menu-section-p">
-            <h1 class="d-none">신메뉴 목록</h1>
-            <!-- <ul>
-                    <li>
-                    </li>
-                </ul>  -->
-            <div class="list">
-               <span>신규로 출시된 메뉴가 없습니다.</span>
-            </div>
-         </section>
+         <NewMenuList />
 
       </section>
    </main> 
